@@ -17,8 +17,8 @@ conda activate <your_python_env>
 * Clone this repo in your device, and go to the cloned directory.
 ```bash
 cd ~/
-git clone https://github.com/shawbicc/qibullet_sim.git
-cd ./qibullet_sim
+git clone https://github.com/alfattah129/nao_planner_qibullet.git
+cd ./nao_planner_qibullet
 ```
 * Install the dependencies from the `requirements.txt` file using `pip`.
 ```bash
