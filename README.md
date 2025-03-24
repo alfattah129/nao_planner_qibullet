@@ -99,7 +99,7 @@ Contains the AI-powered action planner that uses OpenAI's API to convert natural
   ]
 }
 
-- `main.py`: `main.py` serves as the central controller that connects the NAO robot simulation with AI-powered planning. It takes natural language instructions from users, generates corresponding action plans via `robot_planner.py`, and executes them step-by-step on the virtual NAO robot through `nao_agent.py`, while handling errors and maintaining proper timing between actions. The script runs in a continuous loop until the user enters "stop", providing an interactive way to test all of the robot's capabilities.
+### `main.py`: `main.py` serves as the central controller that connects the NAO robot simulation with AI-powered planning. It takes natural language instructions from users, generates corresponding action plans via `robot_planner.py`, and executes them step-by-step on the virtual NAO robot through `nao_agent.py`, while handling errors and maintaining proper timing between actions. The script runs in a continuous loop until the user enters "stop", providing an interactive way to test all of the robot's capabilities.
 
     > **Note:** Make sure the qiBullet installation is done successfully before trying out the `main.py` or any of your own code. Keep the `nao_agent.py` and 'robot_planner.py' file in the same directory as the code you're trying to run, so that the Nao class can be accessed.
 
