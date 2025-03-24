@@ -2,7 +2,6 @@
 
 A PyBullet-based simulator for NAO robot with AI-driven action planning.
 
-![NAO Robot Simulation](https://softbankrobotics-research.github.io/qibullet/_images/nao_virtual.png)
 ## Features
 
 - **OpenAI-Powered Action Planning**: Generates robot action sequences from natural language instructions
