@@ -1,10 +1,18 @@
-## qiBullet simulator
+# NAO Robot Planner with qiBullet & OpenAI
 
-A PyBullet based simulator for NAO and Pepper robot.
+A PyBullet-based simulator for NAO robot with AI-driven action planning.
+
+![NAO Robot Simulation](https://softbankrobotics-research.github.io/qibullet/_images/nao_virtual.png)
+## Features
+
+- **OpenAI-Powered Action Planning**: Generates robot action sequences from natural language instructions
+- **Full NAO Robot Simulation**: Control speech, movement, and gestures in a PyBullet environment
+- **Multiple Action Types**: Movement, gestures, speech, and vision capabilities
 
 ## Environment setup
 
-- I've used a virtual conda environment with Python 3.9 since the latest version of qiBullet supports upto Python 3.9. 
+- Virtual conda environment with Python 3.9 is used since the latest version of qiBullet supports upto Python 3.9.
+- For thr chatgpt empowered robot planning paper the openai version used was "openai==0.28.0". This is added in the requirements
 
 ## Installation (Ubuntu)
 
@@ -26,7 +34,7 @@ python3 -m pip install -r ./requirements.txt
 ```
 > For installing the qiBullet library alone, follow the README section of the qiBullet repository: https://github.com/softbankrobotics-research/qibullet
 
-## Driver issue (For conda-based virtual environment users)
+## Driver issue For conda-based virtual environment users (From Sabik's repo. I didnt face any issues)
 
 I ran into a driver issue while running the simulator. The issue raised because I was using an Anaconda environment. 
 According to online information, there is a problem with the libstdc++.so file in Anaconda (I use this commercial python distribution). It cannot be associated with the driver of the system, so we removed it and used the libstdc++ that comes with Linux. so creates a soft link there.
@@ -46,34 +54,54 @@ https://stackoverflow.com/questions/72110384/libgl-error-mesa-loader-failed-to-o
 
 ## About this repo
 
-- `nao_agent.py`: Contains the class for the Nao robot for the simulation. The methods in this class are the actions available for the robot. Feel free to check these methods out or modify them. Available actions are: 
-    * `speak(speech=text)`: Speak out the input text.
-    * `stand()`: Set the joint angles for a standing posture.
-    * `sit()`: Set the joint angles for a sitting posture. *(UNDER DEVELOPMENT)*
-    * `wave(hand=right/left)`: Wave a preferrend hand twice. Default is `right`.
-    * `nod_head(direction=up_down/right_left)`: Nod head in a "yes" or "no" gesture. Default is `up_down`.
-    * `turn_head(direction=right/left)`: Turn head left or right. Default is `right`.
-    * `gaze_head(direction=up/down)`: Turn head up or down. Default is `up`.
-    * `raise_arms(hand=left/right/both)`: Raise a preferred arm or both arms. Default is `both`.
-    * `walk(x=x,y=y)`: Walk to a specified coordinate. *(UNDER DEVELOPMENT)*
-    * `handshake(left/right)`: Do a handshake motion with a preferred hand. Default is `right`.
-    * `reset_nao_pose()`: Reset the Nao robot to the standing pose.
-    * `capture_image(top/bottom)`: Returns an image captured from the `top` or `bottom` camera of the Nao robot. Default is `top`.
-    * `stream_video(top/bottom/both)`: Start a realtime video stream from a specified or both cameras using `opencv`. Default is `top`. Hit Space to terminate the stream.
 
-- `main.py`: The main file for the simulation. You can try out different features/actions of the robot in it. Here's an example snippet to get started:
+### `nao_agent.py`
+Contains the class for controlling the Nao robot in simulation. The methods in this class represent all available actions for the robot. Feel free to modify or extend these methods.
 
-    ```python
-    from nao_agent import Nao
-    import time
+**Available Actions:**
+- `speak(speech=text)`: Make the robot say the specified text
+- `stand()`: Set the joint angles for a standing posture
+- `sit()`: Set the joint angles for a sitting posture *(UNDER DEVELOPMENT)*
+- `wave(hand=right/left)`: Wave the specified hand twice (default: `right`)
+- `nod_head(direction=up_down/right_left)`: Nod head in "yes" or "no" gesture (default: `up_down`)
+- `turn_head(direction=right/left)`: Turn head left or right (default: `right`)
+- `gaze_head(direction=up/down)`: Gaze up or down (default: `up`)
+- `raise_arms(hand=left/right/both)`: Raise specified arm(s) (default: `both`)
+- `walk(x=x,y=y)`: Walk to specified coordinates *(UNDER DEVELOPMENT)*
+- `handshake(hand=right/left)`: Perform handshake (default: `right`)
+- `reset_nao_pose()`: Reset to default standing pose
+- `capture_image(camera=top/bottom)`: Capture image from camera (default: `top`)
+- `stream_video(camera=top/bottom/both)`: Start video stream (default: `top`). Press Space to stop.
 
-    simulation = Nao(gui=True) # robot instance
+### `robot_planner.py`
+Contains the AI-powered action planner that uses OpenAI's API to convert natural language instructions into executable action sequences for the NAO robot.
 
-    # try out actions
-    nao.speak("I am Nao, I am a robot.")
-    time.sleep(5.0) # wait for 5s
-    ```
-    > **Note:** Make sure the qiBullet installation is done successfully before trying out the `main.py` or any of your own code. Keep the `nao_agent.py` file in the same directory as the code you're trying to run, so that the Nao class can be accessed.
+**Key Features:**
+- Uses GPT-3.5-turbo model for action planning
+- Converts natural language to structured JSON action plans
+- Validates actions against available NAO capabilities
+- Handles parameter generation for complex actions
+
+**Example Workflow:**
+1. User inputs: "Wave with your left hand, then say hello"
+2. Planner generates:
+```json
+{
+  "actions": [
+    {
+      "action": "wave",
+      "parameters": {"hand": "left"}
+    },
+    {
+      "action": "speak",
+      "parameters": {"speech": "hello"}
+    }
+  ]
+}
+
+- `main.py`: `main.py` serves as the central controller that connects the NAO robot simulation with AI-powered planning. It takes natural language instructions from users, generates corresponding action plans via `robot_planner.py`, and executes them step-by-step on the virtual NAO robot through `nao_agent.py`, while handling errors and maintaining proper timing between actions. The script runs in a continuous loop until the user enters "stop", providing an interactive way to test all of the robot's capabilities.
+
+    > **Note:** Make sure the qiBullet installation is done successfully before trying out the `main.py` or any of your own code. Keep the `nao_agent.py` and 'robot_planner.py' file in the same directory as the code you're trying to run, so that the Nao class can be accessed.
 
 ## Useful References
 
