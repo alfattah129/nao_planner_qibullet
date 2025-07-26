@@ -1,4 +1,4 @@
-# NAO Robot Planner with qiBullet & OpenAI
+# NAO Robot Planner Using OpenAI API with qiBullet Simulator
 
 A PyBullet-based simulator for the NAO robot with AI-driven action planning.
 
@@ -110,7 +110,7 @@ The script runs in a continuous loop until the user enters "stop," providing an 
 
 > **Note:** Ensure qiBullet installation is complete before running `main.py` or any custom scripts. Keep `nao_agent.py` and `robot_planner.py` in the same directory as the script you're executing, so the NAO class can be accessed correctly.
 
-## Face Analysis and Recognition System for NAO Robot
+## (Additional) Face Analysis and Recognition System for NAO Robot
 
 Additionally, This project provides a simple Python script to analyze an image from a NAO robot’s camera. It detects faces, estimates age, gender, emotion, and performs face recognition by comparing the input with reference images.
 
@@ -136,10 +136,9 @@ Install the required packages using pip:
 
 ```bash
 pip install deepface opencv-python numpy
----
 
-## Useful References
 
+### Useful References
 - Example code files: [qiBullet Examples](https://github.com/softbankrobotics-research/qibullet/tree/master/examples)
 - Posture control examples: [qiBullet Wiki - Virtual Robot](https://github.com/softbankrobotics-research/qibullet/wiki/Tutorials:-Virtual-Robot)
 - qiBullet NAO robot class and available methods: [qiBullet NAO Virtual Class](https://github.com/softbankrobotics-research/qibullet/blob/master/qibullet/nao_virtual.py)
